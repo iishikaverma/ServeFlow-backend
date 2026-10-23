@@ -1,3 +1,6 @@
 # ninja log v7
 74	244	8144725872361913	CMakeFiles/serveflow.dir/src/models/MenuItem.cpp.obj	903a1163918484dc
 87	1181	8144725872504753	CMakeFiles/serveflow.dir/src/models/Customer.cpp.obj	c3600ed34ff0f08c
+72	1120	8144727762869627	CMakeFiles/serveflow.dir/src/models/MenuItem.cpp.obj	903a1163918484dc
+60	1139	8144727762739363	CMakeFiles/serveflow.dir/src/main.cpp.obj	b135a28744131696
+1139	1517	8144727773533064	serveflow.exe	eebfca80e8b51458
