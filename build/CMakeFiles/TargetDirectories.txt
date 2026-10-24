@@ -1,3 +1,0 @@
-C:/Users/ishik/Documents/serve_flow/serve_flow_backend/build/CMakeFiles/serveflow.dir
-C:/Users/ishik/Documents/serve_flow/serve_flow_backend/build/CMakeFiles/edit_cache.dir
-C:/Users/ishik/Documents/serve_flow/serve_flow_backend/build/CMakeFiles/rebuild_cache.dir

@@ -13,6 +13,7 @@ set(SOURCES
     src/main.cpp
     src/models/MenuItem.cpp
     src/models/Customer.cpp
+    src/models/OrderItem.cpp
 )
 
 # Create executable

@@ -1,7 +1,8 @@
 #include <iostream>
 
-#include "../include/models/MenuItem.h"
 #include "../include/models/Customer.h"
+#include "../include/models/MenuItem.h"
+#include "../include/models/OrderItem.h"
 
 using namespace std;
 
@@ -11,20 +12,7 @@ int main()
     cout << "Restaurant Order Management System" << endl;
     cout << endl;
 
-    // Creating a MenuItem object
-    MenuItem pizza(
-        1,
-        "Margherita Pizza",
-        "Pizza",
-        249
-    );
-
-    cout << "----- MENU ITEM -----" << endl;
-    pizza.display();
-
-    cout << endl;
-
-    // Creating a Customer object
+    // Customer
     Customer customer(
         101,
         "Rahul Sharma",
@@ -34,6 +22,39 @@ int main()
 
     cout << "----- CUSTOMER -----" << endl;
     customer.display();
+
+    cout << endl;
+
+    // Menu Items
+    MenuItem pizza(
+        1,
+        "Margherita Pizza",
+        "Pizza",
+        249.00
+    );
+
+    MenuItem burger(
+        2,
+        "Classic Burger",
+        "Burgers",
+        199.00
+    );
+
+    cout << "----- MENU -----" << endl;
+
+    pizza.display();
+    burger.display();
+
+    cout << endl;
+
+    // Order Items
+    OrderItem pizzaOrder(pizza, 2);
+    OrderItem burgerOrder(burger, 1);
+
+    cout << "----- ORDER ITEMS -----" << endl;
+
+    pizzaOrder.display();
+    burgerOrder.display();
 
     return 0;
 }

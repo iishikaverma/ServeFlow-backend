@@ -35,6 +35,6 @@ void MenuItem::display() const
 {
     cout << id << ". "
          << name << " | "
-         << category << " | ₹"
+         << category << " | Rs."
          << price << endl;
 }
