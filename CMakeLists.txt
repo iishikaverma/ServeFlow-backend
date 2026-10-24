@@ -19,6 +19,7 @@ set(SOURCES
     src/models/CashPayment.cpp
     src/models/CardPayment.cpp
     src/models/UPIPayment.cpp
+    src/services/MenuService.cpp
 )
 
 # Create executable

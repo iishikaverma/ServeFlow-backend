@@ -5,10 +5,13 @@
 #include "../include/models/MenuItem.h"
 #include "../include/models/OrderItem.h"
 #include "../include/models/Order.h"
+
 #include "../include/models/Payment.h"
 #include "../include/models/CashPayment.h"
 #include "../include/models/CardPayment.h"
 #include "../include/models/UPIPayment.h"
+
+#include "../include/services/MenuService.h"
 
 using namespace std;
 
@@ -31,7 +34,9 @@ int main()
 
     cout << endl;
 
-    // Menu Items
+    // Menu Service
+    MenuService menuService;
+
     MenuItem pizza(
         1,
         "Margherita Pizza",
@@ -46,10 +51,10 @@ int main()
         199.00
     );
 
-    cout << "----- MENU -----" << endl;
+    menuService.addMenuItem(pizza);
+    menuService.addMenuItem(burger);
 
-    pizza.display();
-    burger.display();
+    menuService.displayMenu();
 
     cout << endl;
 
@@ -75,7 +80,7 @@ int main()
     );
 
     order.processPayment();
-    
+
     cout << endl;
 
     cout << "Final Order Status: "
