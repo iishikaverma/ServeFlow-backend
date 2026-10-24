@@ -3,6 +3,7 @@
 #include "../include/models/Customer.h"
 #include "../include/models/MenuItem.h"
 #include "../include/models/OrderItem.h"
+#include "../include/models/Order.h"
 
 using namespace std;
 
@@ -51,10 +52,15 @@ int main()
     OrderItem pizzaOrder(pizza, 2);
     OrderItem burgerOrder(burger, 1);
 
-    cout << "----- ORDER ITEMS -----" << endl;
+    // Order
+    Order order(5001, customer);
 
-    pizzaOrder.display();
-    burgerOrder.display();
+    order.addItem(pizzaOrder);
+    order.addItem(burgerOrder);
+
+    cout << "----- ORDER -----" << endl;
+
+    order.display();
 
     return 0;
 }
