@@ -1,10 +1,14 @@
 #include "../../include/models/Order.h"
 #include <iostream>
+#include <utility>
 
 using namespace std;
 
 Order::Order(int orderId, Customer customer)
-    : orderId(orderId), customer(customer), status("Pending")
+    : orderId(orderId),
+      customer(customer),
+      status("Pending"),
+      payment(nullptr)
 {
 }
 
@@ -23,6 +27,24 @@ double Order::calculateTotal() const
     }
 
     return total;
+}
+
+void Order::setPayment(unique_ptr<Payment> payment)
+{
+    this->payment = move(payment);
+}
+
+void Order::processPayment()
+{
+    if (payment)
+    {
+        payment->processPayment();
+        status = "Confirmed";
+    }
+    else
+    {
+        cout << "No payment method selected." << endl;
+    }
 }
 
 int Order::getOrderId() const

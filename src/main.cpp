@@ -1,4 +1,5 @@
 #include <iostream>
+#include <memory>
 
 #include "../include/models/Customer.h"
 #include "../include/models/MenuItem.h"
@@ -69,11 +70,17 @@ int main()
     cout << endl;
     cout << "----- PAYMENT -----" << endl;
 
-    Payment* payment = new UPIPayment(order.calculateTotal());
+    order.setPayment(
+        make_unique<UPIPayment>(order.calculateTotal())
+    );
 
-    payment->processPayment();
+    order.processPayment();
+    
+    cout << endl;
 
-    delete payment;
+    cout << "Final Order Status: "
+        << order.getStatus()
+        << endl;
 
     return 0;
 }

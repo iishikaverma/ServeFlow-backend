@@ -3,9 +3,11 @@
 
 #include <vector>
 #include <string>
+#include <memory>
 
 #include "Customer.h"
 #include "OrderItem.h"
+#include "Payment.h"
 
 using namespace std;
 
@@ -17,12 +19,18 @@ private:
     vector<OrderItem> items;
     string status;
 
+    unique_ptr<Payment> payment;
+
 public:
     Order(int orderId, Customer customer);
 
     void addItem(OrderItem item);
 
     double calculateTotal() const;
+
+    void setPayment(unique_ptr<Payment> payment);
+
+    void processPayment();
 
     int getOrderId() const;
     Customer getCustomer() const;
