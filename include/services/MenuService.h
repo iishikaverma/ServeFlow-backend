@@ -18,6 +18,8 @@ public:
 
     MenuItem* findItemById(int id);
 
+    void loadFromFile(const string& filePath);
+
     void displayMenu() const;
 };
 

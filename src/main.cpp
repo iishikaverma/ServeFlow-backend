@@ -1,5 +1,6 @@
 #include <iostream>
 #include <memory>
+#include <utility>
 
 #include "../include/models/Customer.h"
 #include "../include/models/MenuItem.h"
@@ -12,6 +13,7 @@
 #include "../include/models/UPIPayment.h"
 
 #include "../include/services/MenuService.h"
+#include "../include/services/OrderService.h"
 
 using namespace std;
 
@@ -37,30 +39,19 @@ int main()
     // Menu Service
     MenuService menuService;
 
-    MenuItem pizza(
-        1,
-        "Margherita Pizza",
-        "Pizza",
-        249.00
-    );
-
-    MenuItem burger(
-        2,
-        "Classic Burger",
-        "Burgers",
-        199.00
-    );
-
-    menuService.addMenuItem(pizza);
-    menuService.addMenuItem(burger);
+    menuService.loadFromFile("data/menu.json");
 
     menuService.displayMenu();
 
     cout << endl;
 
+    // Find menu items
+    MenuItem* pizza = menuService.findItemById(1);
+    MenuItem* burger = menuService.findItemById(2);
+
     // Order Items
-    OrderItem pizzaOrder(pizza, 2);
-    OrderItem burgerOrder(burger, 1);
+    OrderItem pizzaOrder(*pizza, 2);
+    OrderItem burgerOrder(*burger, 1);
 
     // Order
     Order order(5001, customer);
@@ -86,6 +77,14 @@ int main()
     cout << "Final Order Status: "
         << order.getStatus()
         << endl;
+        
+    OrderService orderService;
+
+    orderService.addOrder(move(order));
+
+    cout << endl;
+
+    orderService.displayOrders();
 
     return 0;
 }

@@ -6,7 +6,10 @@ set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
 # Header files
-include_directories(include)
+include_directories(
+    include
+    "C:/vcpkg/installed/x64-mingw-dynamic/include"
+)
 
 # Source files
 set(SOURCES
@@ -20,6 +23,8 @@ set(SOURCES
     src/models/CardPayment.cpp
     src/models/UPIPayment.cpp
     src/services/MenuService.cpp
+    src/services/OrderService.cpp
+    src/utils/FileManager.cpp
 )
 
 # Create executable
