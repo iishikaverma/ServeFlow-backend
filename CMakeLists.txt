@@ -15,6 +15,10 @@ set(SOURCES
     src/models/Customer.cpp
     src/models/OrderItem.cpp
     src/models/Order.cpp
+    src/models/Payment.cpp
+    src/models/CashPayment.cpp
+    src/models/CardPayment.cpp
+    src/models/UPIPayment.cpp
 )
 
 # Create executable

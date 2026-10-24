@@ -4,6 +4,10 @@
 #include "../include/models/MenuItem.h"
 #include "../include/models/OrderItem.h"
 #include "../include/models/Order.h"
+#include "../include/models/Payment.h"
+#include "../include/models/CashPayment.h"
+#include "../include/models/CardPayment.h"
+#include "../include/models/UPIPayment.h"
 
 using namespace std;
 
@@ -61,6 +65,15 @@ int main()
     cout << "----- ORDER -----" << endl;
 
     order.display();
+
+    cout << endl;
+    cout << "----- PAYMENT -----" << endl;
+
+    Payment* payment = new UPIPayment(order.calculateTotal());
+
+    payment->processPayment();
+
+    delete payment;
 
     return 0;
 }
