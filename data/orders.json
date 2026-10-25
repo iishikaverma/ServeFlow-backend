@@ -1,0 +1,22 @@
+[
+    {
+        "customerName": "Rahul Sharma",
+        "items": [
+            {
+                "name": "Margherita Pizza",
+                "price": 249.0,
+                "quantity": 2,
+                "subtotal": 498.0
+            },
+            {
+                "name": "Classic Burger",
+                "price": 199.0,
+                "quantity": 1,
+                "subtotal": 199.0
+            }
+        ],
+        "orderId": 5001,
+        "status": "Confirmed",
+        "total": 697.0
+    }
+]

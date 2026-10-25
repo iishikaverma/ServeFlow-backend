@@ -82,6 +82,8 @@ int main()
 
     orderService.addOrder(move(order));
 
+    orderService.saveToFile("data/orders.json");
+
     cout << endl;
 
     orderService.displayOrders();

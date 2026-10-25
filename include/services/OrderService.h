@@ -18,6 +18,8 @@ public:
 
     Order* findOrderById(int orderId);
 
+    void saveToFile(const string& filePath);
+
     void displayOrders() const;
 };
 
