@@ -1,0 +1,8 @@
+{
+  "name": "serveflow",
+  "version-string": "1.0.0",
+  "dependencies": [
+    "crow",
+    "nlohmann-json"
+  ]
+}

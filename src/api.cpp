@@ -4,6 +4,8 @@
 #include <utility>
 #include <memory>
 #include <string>
+#include <cstdlib>
+#include <cstdint>
 
 #include "../include/services/MenuService.h"
 #include "../include/services/OrderService.h"
@@ -361,8 +363,14 @@ int main()
     });
 
 
-    // Start server
-    app.port(18080)
+    // Start server — hosts like Render inject the port via $PORT.
+    uint16_t port = 18080;
+    if (const char* envPort = std::getenv("PORT"))
+    {
+        port = static_cast<uint16_t>(std::atoi(envPort));
+    }
+
+    app.port(port)
        .multithreaded()
        .run();
 

@@ -1,19 +1,17 @@
 cmake_minimum_required(VERSION 3.20)
 
-project(ServeFlow)
+project(ServeFlow CXX)
 
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
-# Header files
-include_directories(
-    include
-    "C:/vcpkg/installed/x64-mingw-dynamic/include"
-)
+# Dependencies (via vcpkg toolchain). Crow bundles standalone asio.
+find_package(Crow CONFIG REQUIRED)
+find_package(nlohmann_json CONFIG REQUIRED)
+find_package(Threads REQUIRED)
 
-# Source files
-set(SOURCES
-    src/main.cpp
+# Shared model/service/util sources.
+set(CORE_SOURCES
     src/models/MenuItem.cpp
     src/models/Customer.cpp
     src/models/OrderItem.cpp
@@ -27,26 +25,21 @@ set(SOURCES
     src/utils/FileManager.cpp
 )
 
-# Create executable
-add_executable(serveflow ${SOURCES})
+# Console demo app
+add_executable(serveflow src/main.cpp ${CORE_SOURCES})
+target_include_directories(serveflow PRIVATE include)
+target_link_libraries(serveflow PRIVATE nlohmann_json::nlohmann_json)
 
-add_executable(serveflow_api
-    src/api.cpp
-
-    src/models/Customer.cpp
-    src/models/MenuItem.cpp
-    src/models/OrderItem.cpp
-    src/models/Order.cpp
-
-    src/models/Payment.cpp
-    src/models/CashPayment.cpp
-    src/models/CardPayment.cpp
-    src/models/UPIPayment.cpp
-
-    src/services/MenuService.cpp
-    src/services/OrderService.cpp
-
-    src/utils/FileManager.cpp
+# REST API server (deployed target)
+add_executable(serveflow_api src/api.cpp ${CORE_SOURCES})
+target_include_directories(serveflow_api PRIVATE include)
+target_link_libraries(serveflow_api PRIVATE
+    Crow::Crow
+    nlohmann_json::nlohmann_json
+    Threads::Threads
 )
 
-target_link_libraries(serveflow_api PRIVATE ws2_32 mswsock)
+# Windows needs the Winsock libraries; Linux/Docker does not.
+if(WIN32)
+    target_link_libraries(serveflow_api PRIVATE ws2_32 mswsock)
+endif()
