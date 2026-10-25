@@ -31,6 +31,49 @@ Order* OrderService::findOrderById(int orderId)
     return nullptr;
 }
 
+void OrderService::loadFromFile(const string& filePath)
+{
+    auto data = FileManager::readJson(filePath);
+
+    orders.clear();
+
+    for (const auto& orderData : data)
+    {
+        Customer customer(
+            orderData["customer"]["id"],
+            orderData["customer"]["name"],
+            orderData["customer"]["phone"],
+            orderData["customer"]["email"]
+        );
+
+        Order order(
+            orderData["orderId"],
+            customer
+        );
+
+        order.setStatus(orderData["status"]);
+
+        for (const auto& itemData : orderData["items"])
+        {
+            MenuItem menuItem(
+                0,
+                itemData["name"],
+                "Unknown",
+                itemData["price"]
+            );
+
+            OrderItem orderItem(
+                menuItem,
+                itemData["quantity"]
+            );
+
+            order.addItem(orderItem);
+        }
+
+        orders.push_back(std::move(order));
+    }
+}
+
 void OrderService::saveToFile(const string& filePath)
 {
     json data = json::array();

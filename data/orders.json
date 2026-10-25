@@ -1,6 +1,11 @@
 [
     {
-        "customerName": "Rahul Sharma",
+        "customer": {
+            "email": "rahul@example.com",
+            "id": 101,
+            "name": "Rahul Sharma",
+            "phone": "9876543210"
+        },
         "items": [
             {
                 "name": "Margherita Pizza",

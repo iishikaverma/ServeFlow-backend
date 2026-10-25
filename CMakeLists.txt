@@ -29,3 +29,24 @@ set(SOURCES
 
 # Create executable
 add_executable(serveflow ${SOURCES})
+
+add_executable(serveflow_api
+    src/api.cpp
+
+    src/models/Customer.cpp
+    src/models/MenuItem.cpp
+    src/models/OrderItem.cpp
+    src/models/Order.cpp
+
+    src/models/Payment.cpp
+    src/models/CashPayment.cpp
+    src/models/CardPayment.cpp
+    src/models/UPIPayment.cpp
+
+    src/services/MenuService.cpp
+    src/services/OrderService.cpp
+
+    src/utils/FileManager.cpp
+)
+
+target_link_libraries(serveflow_api PRIVATE ws2_32 mswsock)
