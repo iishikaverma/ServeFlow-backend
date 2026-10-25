@@ -1,4 +1,5 @@
 #include <crow.h>
+#include <crow/middlewares/cors.h>
 #include <vector>
 #include <utility>
 #include <memory>
@@ -14,7 +15,14 @@ using namespace std;
 
 int main()
 {
-    crow::SimpleApp app;
+    crow::App<crow::CORSHandler> app;
+
+    // Allow the browser frontend (any origin) to call this API
+    app.get_middleware<crow::CORSHandler>()
+        .global()
+        .origin("*")
+        .methods(crow::HTTPMethod::GET, crow::HTTPMethod::POST)
+        .headers("Content-Type");
 
     // GET /api/menu
     CROW_ROUTE(app, "/api/menu")
@@ -71,6 +79,22 @@ int main()
 
             orderData["customer"]["email"] =
                 order.getCustomer().getEmail();
+
+            vector<crow::json::wvalue> itemList;
+
+            for (const OrderItem& item : order.getItems())
+            {
+                crow::json::wvalue itemData;
+
+                itemData["name"] = item.getMenuItem().getName();
+                itemData["price"] = item.getMenuItem().getPrice();
+                itemData["quantity"] = item.getQuantity();
+                itemData["subtotal"] = item.getSubtotal();
+
+                itemList.push_back(std::move(itemData));
+            }
+
+            orderData["items"] = std::move(itemList);
 
             orderList.push_back(std::move(orderData));
         }
