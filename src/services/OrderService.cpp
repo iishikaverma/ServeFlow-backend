@@ -53,6 +53,11 @@ void OrderService::loadFromFile(const string& filePath)
 
         order.setStatus(orderData["status"]);
 
+        if (orderData.contains("paid"))
+        {
+            order.setPaid(orderData["paid"]);
+        }
+
         for (const auto& itemData : orderData["items"])
         {
             MenuItem menuItem(
@@ -90,6 +95,7 @@ void OrderService::saveToFile(const string& filePath)
         orderData["customer"]["email"] = order.getCustomer().getEmail();
 
         orderData["status"] = order.getStatus();
+        orderData["paid"] = order.isPaid();
         orderData["total"] = order.calculateTotal();
 
         json items = json::array();

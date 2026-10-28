@@ -21,7 +21,8 @@
             }
         ],
         "orderId": 5001,
-        "status": "Confirmed",
+        "status": "Preparing",
+        "paid": true,
         "total": 697.0
     },
     {
@@ -46,7 +47,8 @@
             }
         ],
         "orderId": 5002,
-        "status": "Confirmed",
+        "status": "Received",
+        "paid": false,
         "total": 697.0
     },
     {
@@ -71,7 +73,8 @@
             }
         ],
         "orderId": 5003,
-        "status": "Confirmed",
+        "status": "Completed",
+        "paid": true,
         "total": 448.0
     }
 ]

@@ -70,6 +70,7 @@ int main()
 
             orderData["orderId"] = order.getOrderId();
             orderData["status"] = order.getStatus();
+            orderData["paid"] = order.isPaid();
             orderData["total"] = order.calculateTotal();
 
             orderData["customer"]["id"] =
@@ -379,11 +380,11 @@ int main()
 
         string status = body["status"].s();
 
-        // Allowed order statuses.
-        if (status != "Confirmed" &&
+        // Allowed fulfillment statuses (payment is tracked separately).
+        if (status != "Received" &&
             status != "Preparing" &&
             status != "Ready" &&
-            status != "Paid")
+            status != "Completed")
         {
             return crow::response(400, "Invalid status");
         }
@@ -397,6 +398,13 @@ int main()
         if (order == nullptr)
         {
             return crow::response(404, "Order not found");
+        }
+
+        // An order can only be completed once it has been paid.
+        if (status == "Completed" && !order->isPaid())
+        {
+            return crow::response(
+                400, "Order must be paid before it can be completed");
         }
 
         order->setStatus(status);

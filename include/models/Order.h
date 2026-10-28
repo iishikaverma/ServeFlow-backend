@@ -18,6 +18,7 @@ private:
     Customer customer;
     vector<OrderItem> items;
     string status;
+    bool paid;
 
     unique_ptr<Payment> payment;
 
@@ -38,6 +39,10 @@ public:
     string getStatus() const;
 
     void setStatus(string status);
+
+    bool isPaid() const;
+
+    void setPaid(bool paid);
 
     void display() const;
 };

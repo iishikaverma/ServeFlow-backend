@@ -7,7 +7,8 @@ using namespace std;
 Order::Order(int orderId, Customer customer)
     : orderId(orderId),
       customer(customer),
-      status("Pending"),
+      status("Received"),
+      paid(false),
       payment(nullptr)
 {
 }
@@ -39,7 +40,7 @@ void Order::processPayment()
     if (payment)
     {
         payment->processPayment();
-        status = "Confirmed";
+        paid = true;
     }
     else
     {
@@ -70,6 +71,16 @@ string Order::getStatus() const
 void Order::setStatus(string status)
 {
     this->status = status;
+}
+
+bool Order::isPaid() const
+{
+    return paid;
+}
+
+void Order::setPaid(bool paid)
+{
+    this->paid = paid;
 }
 
 void Order::display() const
