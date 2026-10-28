@@ -23,7 +23,9 @@ int main()
     app.get_middleware<crow::CORSHandler>()
         .global()
         .origin("*")
-        .methods(crow::HTTPMethod::GET, crow::HTTPMethod::POST)
+        .methods(crow::HTTPMethod::GET,
+                 crow::HTTPMethod::POST,
+                 crow::HTTPMethod::PATCH)
         .headers("Content-Type");
 
     // GET /api/menu
@@ -360,6 +362,54 @@ int main()
                 "Invalid payment data"
             );
         }
+    });
+
+
+    // PATCH /api/orders/<orderId>/status
+    CROW_ROUTE(app, "/api/orders/<int>/status")
+        .methods(crow::HTTPMethod::PATCH)
+    ([](const crow::request& req, int orderId)
+    {
+        auto body = crow::json::load(req.body);
+
+        if (!body || !body.has("status"))
+        {
+            return crow::response(400, "status is required");
+        }
+
+        string status = body["status"].s();
+
+        // Allowed order statuses.
+        if (status != "Confirmed" &&
+            status != "Preparing" &&
+            status != "Ready" &&
+            status != "Paid")
+        {
+            return crow::response(400, "Invalid status");
+        }
+
+        OrderService orderService;
+
+        orderService.loadFromFile("data/orders.json");
+
+        Order* order = orderService.findOrderById(orderId);
+
+        if (order == nullptr)
+        {
+            return crow::response(404, "Order not found");
+        }
+
+        order->setStatus(status);
+
+        orderService.saveToFile("data/orders.json");
+
+        crow::json::wvalue response;
+
+        response["message"] = "Status updated";
+        response["orderId"] = orderId;
+        response["status"] = status;
+
+        return crow::response(200, response);
     });
 
 
